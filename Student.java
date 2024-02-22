@@ -60,6 +60,10 @@ public class Student
     {
      return grade;
     }
+    public String getName()
+    {
+        return name;
+    }
 
     public void setGrade(double grade)
     {

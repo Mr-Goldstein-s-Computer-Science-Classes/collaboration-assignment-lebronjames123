@@ -4,75 +4,76 @@ import java.util.List;
 class Gradebook {
 
     private List<Student> students;
-    private List<String> assignments;
+    private List<String> assignment;
 
-    public Gradebook() {
-        students = new ArrayList<>();
-        assignments = new ArrayList<>();
+
+    public Gradebook()
+    {
+        students = new ArrayList<Student>();
+        assignment = new ArrayList<String>();
     }
 
-    public void createStudent(String name) {
+    public void createStudent(String name)
+    {
         students.add(new Student(name));
     }
 
 
-    public void addAssignment(String assignment) {
-        assignments.add(assignment);
-        for (Student student : students) {
-            student.addAssignment();
-        }
+    public void addAssignment(String assignments)
+    {
+        assignment.add(assignments);
     }
 
-    public void gradeAssignment(String assignment, String studentName, double grade) {
+    public void gradeAssignment(String assignments, String studentName, double grade)
+    {
         Student student = getStudent(studentName);
-        if (student != null) {
-            int assignmentIndex = assignments.indexOf(assignment);
-            if (assignmentIndex != -1) {
-                student.gradeAssignment(String.valueOf(assignmentIndex), grade);
-            }
+        if (student != null && assignment.contains(assignments))
+        {
+            student.gradeAssignment(assignments, grade);
         }
     }
 
-    public double getAverageGrade(String assignment) {
-        int assignmentIndex = assignments.indexOf(assignment);
-        if (assignmentIndex != -1) {
-            double total = 0;
-            int count = 0;
-            for (Student student : students) {
-                double grade = student.getAssignmentGrade(assignmentIndex);
-                if (grade != -1) {
-                    total += grade;
-                    count++;
+    public Double getAverageGrade(String assignment)
+    {
+        Double totalgrade = 0.0;
+        int assignmentCount = 0;
+            for (Student student : students)
+            {
+                double grade = student.getAssignmentGrade(assignment);
+                if (grade != -1)
+                {
+                    totalgrade += grade;
+                    assignmentCount++;
                 }
             }
-            return count == 0 ? 0 : total / count;
-        } else {
-            return 0;
-        }
+            return totalgrade/assignmentCount;
     }
 
-    public double getMinimumGrade(String assignment) {
-        int assignmentIndex = assignments.indexOf(assignment);
-        if (assignmentIndex != -1) {
+    public double getMinimumGrade(String assignment)
+    {
+        int assignmentIndex = assignment.indexOf(assignment);
+        if (assignmentIndex != -1)
+        {
             double min = Double.MAX_VALUE;
-            for (Student student : students) {
-                double grade = student.getAssignmentGrade(assignmentIndex);
-                if (grade != -1 && grade < min) {
+            for (Student student : students)
+            {
+                double grade = student.getAssignmentGrade(assignment);
+                if (grade != -1 && grade < min)
+                {
                     min = grade;
                 }
             }
             return min == Double.MAX_VALUE ? 0 : min;
-        } else {
-            return 0;
         }
+        return getMinOverall();
     }
 
     public double getMaximumGrade(String assignment) {
-        int assignmentIndex = assignments.indexOf(assignment);
+        int assignmentIndex = assignment.indexOf(assignment);
         if (assignmentIndex != -1) {
             double max = Double.MIN_VALUE;
             for (Student student : students) {
-                double grade = student.getAssignmentGrade(assignmentIndex);
+                double grade = student.getAssignmentGrade(assignment);
                 if (grade > max) {
                     max = grade;
                 }
@@ -93,7 +94,7 @@ class Gradebook {
                 count++;
             }
         }
-        return count == 0 ? 0 : total / count;
+        return total/count;
     }
 
     public double getMaxOverall() {
@@ -129,7 +130,7 @@ class Gradebook {
             sb.append(student.getName()).append(": ").append(student.getOverallGrade()).append("\n");
         }
         sb.append("\nAssignments:\n");
-        for (String assignment : assignments) {
+        for (String assignment : assignment) {
             sb.append(assignment).append("\n");
         }
         return sb.toString();
