@@ -11,11 +11,18 @@ public class Student
     }
     public void addAssignment(String assignmentName)
     {
+        String assignment = new String(assignmentName);
         assignments.add(assignmentName);
     }
     public void  gradeAssignment(String assignment, double grade)
     {
-
+        for(String a: assignments)
+        {
+            if(assignments.contains(assignment))
+            {
+                
+            }
+        }
     }
 
     public double getGrade()
